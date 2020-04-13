@@ -11,8 +11,6 @@
 # jormungandr and cowsay are just examples and should be removed for your
 # project, unless needed.
 , makeWrapper
-, jormungandr
-, cowsay
 
 , config ? {}
 # GHC attribute name

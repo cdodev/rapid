@@ -7,7 +7,5 @@ pkgs: _: with pkgs; {
       haskell-nix
       buildPackages
       makeWrapper
-      jormungandr
-      cowsay;
   };
 }
