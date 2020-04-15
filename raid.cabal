@@ -6,11 +6,11 @@ cabal-version: 1.12
 --
 -- hash: dbe30d7e3b47fa8aca8d2ea11584eeedd4fc7651d2bfc51b09b5882676540080
 
-name:           raid
+name:           rapid
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/cdodev/raid#readme>
-homepage:       https://github.com/cdodev/raid#readme
-bug-reports:    https://github.com/cdodev/raid/issues
+description:    Please see the README on GitHub at <https://github.com/cdodev/rapid#readme>
+homepage:       https://github.com/cdodev/rapid#readme
+bug-reports:    https://github.com/cdodev/rapid/issues
 author:         Ben Ford
 maintainer:     ben@commando.dev
 copyright:      2017 Ben Ford
@@ -23,40 +23,40 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/cdodev/raid
+  location: https://github.com/cdodev/rapid
 
 library
   exposed-modules:
       Lib
   other-modules:
-      Paths_raid
+      Paths_rapid
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
   default-language: Haskell2010
 
-executable raid-exe
+executable rapid-exe
   main-is: Main.hs
   other-modules:
-      Paths_raid
+      Paths_rapid
   hs-source-dirs:
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
-    , raid
+    , rapid
   default-language: Haskell2010
 
-test-suite raid-test
+test-suite rapid-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Paths_raid
+      Paths_rapid
   hs-source-dirs:
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
-    , raid
+    , rapid
   default-language: Haskell2010

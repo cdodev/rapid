@@ -1,3 +1,3 @@
-# Changelog for raid
+# Changelog for rapid
 
 ## Unreleased changes

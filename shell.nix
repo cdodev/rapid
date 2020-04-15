@@ -3,7 +3,8 @@ let
   pkgs = import ./nix {};
 in
 hsPkgs.shellFor {
-      packages = ps: [ps.raid];
+      name = "rapid-shell"
+      packages = ps: [ps.rapid];
       withHoogle = true;
       buildInputs = with pkgs.haskellPackages; with pkgs;
        [ hlint stylish-haskell ghcid ghcide cabal-install hie haskell-nix.nix-tools ];
@@ -11,9 +12,6 @@ hsPkgs.shellFor {
       shellHook = ''
         # check if it's still needed ?
         # https://github.com/NixOS/nixpkgs/issues/55539
-        export HIE_HOOGLE_DATABASE="$NIX_GHC_LIBDIR/../../share/doc/hoogle/index.html"
-        source ./run_daemon
-
-
+        export HIE_HOOGLE_DATABASE="$(cat $(${pkgs.which}/bin/which hoogle) | sed -n -e 's|.*--database \(.*\.hoo\).*|\1|p')"
       '';
   }

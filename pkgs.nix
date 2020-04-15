@@ -19,6 +19,6 @@
         };
       };
   extras = hackage:
-    { packages = { raid = ./.plan.nix/raid.nix; }; };
-  modules = [ ({ lib, ... }: { packages = { "raid" = { flags = {}; }; }; }) ];
+    { packages = { rapid = ./.plan.nix/rapid.nix; }; };
+  modules = [ ({ lib, ... }: { packages = { "rapid" = { flags = {}; }; }; }) ];
   }
