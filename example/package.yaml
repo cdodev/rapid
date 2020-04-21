@@ -1,23 +1,18 @@
-name:                rapid
+name:                rapid-example
 version:             0.1.0.0
-github:              "cdodev/rapid"
-license:             BSD3
+github:              "futurefinance/rapid"
 author:              "Ben Ford"
-maintainer:          "ben@commando.dev"
-copyright:           "2020 Ben Ford"
-
-extra-source-files:
-- README.md
-- ChangeLog.md
+maintainer:          "bford@futurefinance.com"
+copyright:           "2020 Future Finance"
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
-# category:            Network
+# category:            Web
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/cdodev/rapid#readme>
+description:         Please see the README on GitHub at <https://github.com/futurefinance/rapid#readme>
 
 default-extensions:
 - DataKinds
@@ -29,6 +24,7 @@ default-extensions:
 - GADTs
 - GeneralizedNewtypeDeriving
 - ImplicitParams
+- KindSignatures
 - LambdaCase
 - MultiParamTypeClasses
 - MultiWayIf
@@ -43,42 +39,38 @@ default-extensions:
 - TypeFamilies
 - TypeOperators
 - ViewPatterns
+- PatternSynonyms
+- NumericUnderscores
+- PostfixOperators
+- TupleSections
+- BlockArguments
+
+ghc-options:
+- -fwarn-redundant-constraints
+# - -fno-warn-partial-type-signatures
+
 
 dependencies:
 - base >= 4.7 && < 5
+- aws-lambda-haskell-runtime
 - aeson
-- aeson-pretty
-- aws-lambda-haskell-runtime >= 2.0
 - binary
 - bytestring
-- case-insensitive
+- containers
+- rapid
+- hourglass
 - http-api-data
-- http-client
-- http-types
-- iproute
 - insert-ordered-containers
-- katip
 - lens
-- lens-aeson
-- neat-interpolation
-- network
-- process
 - servant
 - servant-server
-- servant-swagger
-- servant-swagger-ui
-- servant-swagger-ui-core
-- servant-swagger-ui-redoc
+- singletons
 - swagger2
 - template-haskell
 - th-lift-instances
 - text
-- transformers
-- unliftio
-- unordered-containers
-- vault
+- vector
 - wai
-# - wai-lambda
 - wai-extra
 - warp
 
@@ -87,21 +79,11 @@ library:
   ghc-options:
   - -O2
   - -Wall
+  - -Wno-partial-type-signatures
   - -Wno-unticked-promoted-constructors
 
-# executables:
-#   rapid-example:
-#     main:                Rapid.Example
-#     source-dirs:         src
-#     ghc-options:
-#     - -threaded
-#     - -rtsopts
-#     - -with-rtsopts=-N
-#     dependencies:
-#     - rapid
-
 tests:
-  rapid-test:
+  example-tests:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -109,14 +91,35 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - rapid
+    - rapid-example
     - hspec
-    - hspec-wai
-    - hspec-wai-json
-    # - hedgehog
-    - lens
-    - lens-aeson
     - tasty
     - tasty-hspec
     - tasty-ant-xml
     - tasty-hedgehog
+
+_exe-defs: &exe-defaults
+  source-dirs:         app
+  ghc-options:
+  - -threaded
+  - -rtsopts
+  - -O2
+  - -static
+  - -with-rtsopts=-N
+  cc-options: -static
+  ld-options: -static -pthread
+  dependencies:
+  - rapid-example
+
+executables:
+  generate-swagger:
+    main:                generate-swagger.hs
+    <<: *exe-defaults
+
+  bootstrap:
+    main:                bootstrap.hs
+    <<: *exe-defaults
+
+  run:
+    main:                run.hs
+    <<: *exe-defaults

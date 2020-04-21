@@ -3,12 +3,12 @@ let
   pkgs = import ./nix {};
 in
 hsPkgs.shellFor {
-      name = "rapid-shell"
+      name = "rapid-shell";
       packages = ps: [ps.rapid];
       withHoogle = true;
       buildInputs = with pkgs.haskellPackages; with pkgs;
-       [ hlint stylish-haskell ghcid ghcide cabal-install hie haskell-nix.nix-tools ];
-
+       [ hlint hpack stylish-haskell ghcid ghcide cabal-install hie haskell-nix.nix-tools ];
+      exactDeps = true;
       shellHook = ''
         # check if it's still needed ?
         # https://github.com/NixOS/nixpkgs/issues/55539

@@ -1,0 +1,205 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.2.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: ea09a89e11d6c001a4f2a5dfb473aef97db89ff2e358779dd295f8a8fe91801b
+
+name:           rapid-example
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/cdodev/rapid#readme>
+homepage:       https://github.com/cdodev/rapid#readme
+bug-reports:    https://github.com/cdodev/rapid/issues
+author:         Ben Ford
+maintainer:     ben@commando.dev
+copyright:      2020 Ben Ford
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/cdodev/rapid
+
+library
+  exposed-modules:
+      Server
+  other-modules:
+      Paths_rapid_example
+  hs-source-dirs:
+      src
+  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DisambiguateRecordFields DuplicateRecordFields FlexibleInstances GADTs GeneralizedNewtypeDeriving ImplicitParams KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings PartialTypeSignatures RankNTypes RecordWildCards ScopedTypeVariables TemplateHaskell TypeApplications TypeFamilies TypeOperators ViewPatterns PatternSynonyms NumericUnderscores PostfixOperators TupleSections BlockArguments
+  ghc-options: -fwarn-redundant-constraints -O2 -Wall -Wno-partial-type-signatures -Wno-unticked-promoted-constructors
+  build-depends:
+      aeson
+    , aws-lambda-haskell-runtime
+    , base >=4.7 && <5
+    , binary
+    , bytestring
+    , containers
+    , hourglass
+    , http-api-data
+    , insert-ordered-containers
+    , lens
+    , servant
+    , servant-server
+    , rapid
+    , singletons
+    , swagger2
+    , template-haskell
+    , text
+    , th-lift-instances
+    , vector
+    , wai
+    , wai-extra
+    , warp
+  default-language: Haskell2010
+
+executable bootstrap
+  main-is: bootstrap.hs
+  other-modules:
+      Paths_rapid_example
+  hs-source-dirs:
+      app
+  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DisambiguateRecordFields DuplicateRecordFields FlexibleInstances GADTs GeneralizedNewtypeDeriving ImplicitParams KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings PartialTypeSignatures RankNTypes RecordWildCards ScopedTypeVariables TemplateHaskell TypeApplications TypeFamilies TypeOperators ViewPatterns PatternSynonyms NumericUnderscores PostfixOperators TupleSections BlockArguments
+  ghc-options: -fwarn-redundant-constraints -threaded -rtsopts -O2 -static -with-rtsopts=-N
+  cc-options: -static
+  ld-options: -static -pthread
+  build-depends:
+      aeson
+    , aws-lambda-haskell-runtime
+    , base >=4.7 && <5
+    , binary
+    , bytestring
+    , containers
+    , hourglass
+    , http-api-data
+    , insert-ordered-containers
+    , lens
+    , servant
+    , servant-server
+    , rapid
+    , rapid-example
+    , singletons
+    , swagger2
+    , template-haskell
+    , text
+    , th-lift-instances
+    , vector
+    , wai
+    , wai-extra
+    , warp
+  default-language: Haskell2010
+
+executable generate-swagger
+  main-is: generate-swagger.hs
+  other-modules:
+      Paths_rapid_example
+  hs-source-dirs:
+      app
+  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DisambiguateRecordFields DuplicateRecordFields FlexibleInstances GADTs GeneralizedNewtypeDeriving ImplicitParams KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings PartialTypeSignatures RankNTypes RecordWildCards ScopedTypeVariables TemplateHaskell TypeApplications TypeFamilies TypeOperators ViewPatterns PatternSynonyms NumericUnderscores PostfixOperators TupleSections BlockArguments
+  ghc-options: -fwarn-redundant-constraints -threaded -rtsopts -O2 -static -with-rtsopts=-N
+  cc-options: -static
+  ld-options: -static -pthread
+  build-depends:
+      aeson
+    , aws-lambda-haskell-runtime
+    , base >=4.7 && <5
+    , binary
+    , bytestring
+    , containers
+    , hourglass
+    , http-api-data
+    , insert-ordered-containers
+    , lens
+    , servant
+    , servant-server
+    , rapid
+    , rapid-example
+    , singletons
+    , swagger2
+    , template-haskell
+    , text
+    , th-lift-instances
+    , vector
+    , wai
+    , wai-extra
+    , warp
+  default-language: Haskell2010
+
+executable run
+  main-is: run.hs
+  other-modules:
+      Paths_rapid_example
+  hs-source-dirs:
+      app
+  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DisambiguateRecordFields DuplicateRecordFields FlexibleInstances GADTs GeneralizedNewtypeDeriving ImplicitParams KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings PartialTypeSignatures RankNTypes RecordWildCards ScopedTypeVariables TemplateHaskell TypeApplications TypeFamilies TypeOperators ViewPatterns PatternSynonyms NumericUnderscores PostfixOperators TupleSections BlockArguments
+  ghc-options: -fwarn-redundant-constraints -threaded -rtsopts -O2 -static -with-rtsopts=-N
+  cc-options: -static
+  ld-options: -static -pthread
+  build-depends:
+      aeson
+    , aws-lambda-haskell-runtime
+    , base >=4.7 && <5
+    , binary
+    , bytestring
+    , containers
+    , hourglass
+    , http-api-data
+    , insert-ordered-containers
+    , lens
+    , servant
+    , servant-server
+    , rapid
+    , rapid-example
+    , singletons
+    , swagger2
+    , template-haskell
+    , text
+    , th-lift-instances
+    , vector
+    , wai
+    , wai-extra
+    , warp
+  default-language: Haskell2010
+
+test-suite example-tests
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_rapid_example
+  hs-source-dirs:
+      test
+  default-extensions: DataKinds DeriveAnyClass DeriveGeneric DisambiguateRecordFields DuplicateRecordFields FlexibleInstances GADTs GeneralizedNewtypeDeriving ImplicitParams KindSignatures LambdaCase MultiParamTypeClasses MultiWayIf NamedFieldPuns OverloadedStrings PartialTypeSignatures RankNTypes RecordWildCards ScopedTypeVariables TemplateHaskell TypeApplications TypeFamilies TypeOperators ViewPatterns PatternSynonyms NumericUnderscores PostfixOperators TupleSections BlockArguments
+  ghc-options: -fwarn-redundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , aws-lambda-haskell-runtime
+    , base >=4.7 && <5
+    , binary
+    , bytestring
+    , containers
+    , hourglass
+    , hspec
+    , http-api-data
+    , insert-ordered-containers
+    , lens
+    , servant
+    , servant-server
+    , rapid
+    , rapid-example
+    , singletons
+    , swagger2
+    , tasty
+    , tasty-ant-xml
+    , tasty-hedgehog
+    , tasty-hspec
+    , template-haskell
+    , text
+    , th-lift-instances
+    , vector
+    , wai
+    , wai-extra
+    , warp
+  default-language: Haskell2010
