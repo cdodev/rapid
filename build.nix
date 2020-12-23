@@ -6,7 +6,7 @@
 
 pkgs.haskell-nix.project {
   src = pkgs.haskell-nix.haskellLib.cleanGit {
-    name = "reanimate";
+    name = "rapid";
     src = ./.;
   };
 }
