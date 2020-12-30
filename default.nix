@@ -3,6 +3,7 @@
 #     $(nix-build --no-link -A fullBuildScript)
 {
   pkgName,
+  projectDir ? toString "./.",
   compiler ? "ghc865", # matching stack.yaml
   stack2nix-output-path ? "./rapid-output.nix"
 }:
@@ -24,7 +25,7 @@ let
 
   stack2nix-script = import "${static-haskell-nix}/static-stack2nix-builder/stack2nix-script.nix" {
     inherit pkgs;
-    stack-project-dir = toString ./.; # where stack.yaml is
+    stack-project-dir = projectDir; # where stack.yaml is
     hackageSnapshot = "2020-02-15T00:00:00Z"; # pins e.g. extra-deps without hashes or revisions
   };
 
