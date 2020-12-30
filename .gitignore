@@ -27,3 +27,4 @@ cabal.project.local~
 ### Nix ###
 result*
 .stack-to-nix.cache
+*.lock

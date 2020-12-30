@@ -1,11 +1,5 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
---
--- see: https://github.com/sol/hpack
---
--- hash: f21ebf4b90d48f8f78bb20276b914180e6b3add43b7324e5a3bd0d2c60d99496
-
 name:           rapid
 version:        0.1.0.0
 description:    Please see the README on GitHub at <https://github.com/cdodev/rapid#readme>
