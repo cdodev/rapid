@@ -2,12 +2,12 @@
 #
 #     $(nix-build --no-link -A fullBuildScript)
 {
-  nixpkgs ? import ./nix/nixos-19-09.nix,
+  pkgName,
+  compiler ? "ghc865", # matching stack.yaml
   stack2nix-output-path ? "./rapid-output.nix"
 }:
 let
-  cabalPackageName = "rapid-example";
-  compiler = "ghc865"; # matching stack.yaml
+  cabalPackageName = pkgName;
 
   # Pin static-haskell-nix version.
   static-haskell-nix =
@@ -24,7 +24,7 @@ let
 
   stack2nix-script = import "${static-haskell-nix}/static-stack2nix-builder/stack2nix-script.nix" {
     inherit pkgs;
-    stack-project-dir = toString ./example; # where stack.yaml is
+    stack-project-dir = toString ./.; # where stack.yaml is
     hackageSnapshot = "2020-02-15T00:00:00Z"; # pins e.g. extra-deps without hashes or revisions
   };
 
