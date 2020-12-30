@@ -6,7 +6,7 @@
   stack2nix-output-path ? "./rapid-output.nix"
 }:
 let
-  cabalPackageName = "rapid";
+  cabalPackageName = "rapid-example";
   compiler = "ghc865"; # matching stack.yaml
 
   # Pin static-haskell-nix version.
@@ -24,7 +24,7 @@ let
 
   stack2nix-script = import "${static-haskell-nix}/static-stack2nix-builder/stack2nix-script.nix" {
     inherit pkgs;
-    stack-project-dir = toString ./.; # where stack.yaml is
+    stack-project-dir = toString ./example; # where stack.yaml is
     hackageSnapshot = "2020-02-15T00:00:00Z"; # pins e.g. extra-deps without hashes or revisions
   };
 
@@ -82,12 +82,13 @@ let
   static_haskellPackages_with_fixes = static_haskellPackages.override (old: {
     overrides = pkgs.lib.composeExtensions (old.overrides or (_: _: {})) (self: super: {
 
-      your-package = setCleanHaskellSrc super.your-package;
+      rapid = setCleanHaskellSrc super.rapid;
+      rapid-example = setCleanHaskellSrc "./example";
 
     });
   });
 
-  static_package = static_haskellPackages_with_fixes.your-package;
+  static_package = static_haskellPackages_with_fixes.rapid-example;
 
   # Generates `./build/function.zip` and `./swagger.json` in the local directory.
   lambda_function_zip_script = pkgs.writeShellScript "generate-lamda-function-zip.sh" ''
@@ -98,8 +99,8 @@ let
     (
       set -e;
       mkdir build && cd build
-      cp $STATIC_BUILD_OUT_PATH/bin/your-aws-binary .
-      zip -r function.zip ./your-aws-binary data/
+      cp $STATIC_BUILD_OUT_PATH/bin/bootstrap .
+      zip -r function.zip ./bootstrap data/
     )
   '';
 
