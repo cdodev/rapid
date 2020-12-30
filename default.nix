@@ -84,12 +84,12 @@ let
     overrides = pkgs.lib.composeExtensions (old.overrides or (_: _: {})) (self: super: {
 
       rapid = setCleanHaskellSrc super.rapid;
-      rapid-example = setCleanHaskellSrc "./example";
+      "${pkgName}" = setCleanHaskellSrc super."${pkgName}";
 
     });
   });
 
-  static_package = static_haskellPackages_with_fixes.rapid-example;
+  static_package = static_haskellPackages_with_fixes."${pkgName}";
 
   # Generates `./build/function.zip` and `./swagger.json` in the local directory.
   lambda_function_zip_script = pkgs.writeShellScript "generate-lamda-function-zip.sh" ''
