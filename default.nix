@@ -2,10 +2,10 @@
 #
 #     $(nix-build --no-link -A fullBuildScript)
 {
-  pkgName,
-  projectDir ? toString "./.",
+  pkgName ? "rapid",
+  projectDir ? ./.,
   compiler ? "ghc865", # matching stack.yaml
-  stack2nix-output-path ? "./rapid-output.nix"
+  stack2nix-output-path ? ./rapid-output.nix
 }:
 let
   cabalPackageName = pkgName;
@@ -22,6 +22,8 @@ let
   # your own as long as it has the necessary patches, using e.g.
   #     pkgs = import (fetchTarball https://github.com/nh2/nixpkgs/archive/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa123.tar.gz) {};
   pkgs = import "${static-haskell-nix}/nixpkgs.nix";
+
+  rapid = pkgs.haskellPackages.callCabal2nix "rapid" ./. {};
 
   stack2nix-script = import "${static-haskell-nix}/static-stack2nix-builder/stack2nix-script.nix" {
     inherit pkgs;
@@ -40,7 +42,7 @@ let
     set -eu -o pipefail
     STACK2NIX_OUTPUT_PATH=$(${stack2nix-script})
     export NIX_PATH=nixpkgs=${pkgs.path}
-    ${pkgs.nix}/bin/nix-build --no-link -A static_package --argstr stack2nix-output-path "$STACK2NIX_OUTPUT_PATH" "$@"
+    ${pkgs.nix}/bin/nix-build --no-link -A static_package --show-trace --argstr projectDir ${projectDir} --argstr stack2nix-output-path "$STACK2NIX_OUTPUT_PATH" "$@"
   '';
   # nixpkgs containing all of static-haskell-nix's overrides.
   static_pkgs = static-stack2nix-builder.haskell-static-nix_output.pkgs;
@@ -83,7 +85,6 @@ let
   static_haskellPackages_with_fixes = static_haskellPackages.override (old: {
     overrides = pkgs.lib.composeExtensions (old.overrides or (_: _: {})) (self: super: {
 
-      rapid = setCleanHaskellSrc super.rapid;
       "${pkgName}" = setCleanHaskellSrc super."${pkgName}";
 
     });
@@ -107,10 +108,12 @@ let
 
 in
   {
-    static_package = static-stack2nix-builder.static_package;
+    inherit static_package;
     inherit fullBuildScript;
     inherit lambda_function_zip_script;
     # For debugging:
     inherit stack2nix-script;
     inherit static-stack2nix-builder;
+    inherit static_pkgs;
+    static_hsPkgs = static_haskellPackages_with_fixes;
   }
