@@ -19,6 +19,8 @@ jobs:
       with:
         key: rapid-build
         nix_file: 'build.nix'
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
     - name: Build
       uses: cachix/cachix-action@v8
