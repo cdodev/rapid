@@ -14,4 +14,4 @@ let
           };
 
 in
-  rapid.fullBuildScript
+  rapid.stack2nix-script
