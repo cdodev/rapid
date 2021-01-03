@@ -21,6 +21,13 @@ jobs:
     #     nix_file: 'build.nix'
     #   env:
     #     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    - name: Cache stack directories
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.stack
+          stack-work
+        key: rapid-stack
 
     - name: Build
       uses: cachix/cachix-action@v8
