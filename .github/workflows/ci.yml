@@ -14,13 +14,13 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-unstable
 
-    - name: Cache install Nix packages
-      uses: nix-actions/cache-install@v1.0.6
-      with:
-        key: rapid-build
-        nix_file: 'build.nix'
-      env:
-        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    # - name: Cache install Nix packages
+    #   uses: nix-actions/cache-install@v1.0.6
+    #   with:
+    #     key: rapid-build
+    #     nix_file: 'build.nix'
+    #   env:
+    #     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
     - name: Build
       uses: cachix/cachix-action@v8
