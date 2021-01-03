@@ -28,4 +28,4 @@ jobs:
         name: rapid
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
         extraPullNames: static-haskell-nix
-    - run: $(nix-build -j4 -A fullBuildScript --argstr projectDir $PWD)
+    - run: $(nix-build -A fullBuildScript --argstr projectDir $PWD)
