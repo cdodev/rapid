@@ -44,6 +44,14 @@ let
     export NIX_PATH=nixpkgs=${pkgs.path}
     ${pkgs.nix}/bin/nix-build --no-link -A static_package --show-trace --argstr projectDir ${projectDir} --argstr stack2nix-output-path "$STACK2NIX_OUTPUT_PATH" "$@"
   '';
+
+  # Build with materialized stack2nix
+  materializedBuildScript = pkgs.writeShellScript "materialized-stack2-nix-script.sh" ''
+    set -eu -o pipefail
+    export NIX_PATH=nixpkgs=${pkgs.path}
+    ${pkgs.nix}/bin/nix-build --no-link -A static_package --show-trace --argstr projectDir ${projectDir} --argstr stack2nix-output-path "${stack2nix-output-path}" "$@"
+  '';
+
   # nixpkgs containing all of static-haskell-nix's overrides.
   static_pkgs = static-stack2nix-builder.haskell-static-nix_output.pkgs;
 
@@ -93,9 +101,9 @@ let
   static_package = static_haskellPackages_with_fixes."${pkgName}";
 
   # Generates `./build/function.zip` and `./swagger.json` in the local directory.
-  lambda_function_zip_script = pkgs.writeShellScript "generate-lamda-function-zip.sh" ''
+  lambda_function_script = pkgs.writeShellScript "generate-lamda-function-zip.sh" ''
     set -eu -o pipefail
-    STATIC_BUILD_OUT_PATH=$(${fullBuildScript})
+    STATIC_BUILD_OUT_PATH=$1 # nix store path of built package
     $STATIC_BUILD_OUT_PATH/bin/generate-swagger
     rm -rf build/
     (
@@ -105,12 +113,21 @@ let
       zip -r function.zip ./bootstrap data/
     )
   '';
+  lambda_function_zip_script = pkgs.writeShellScript "generate-lamda-full-zip.sh" ''
+    set -eu -o pipefail
+    ${lambda_function_script} $(${fullBuildScript})
+  '';
+  lambda_function_materialized_script = pkgs.writeShellScript "generate-lamda-materialized-zip.sh" ''
+    set -eu -o pipefail
+    ${lambda_function_script} $(${materializedBuildScript})
+  '';
 
 in
   {
     inherit static_package;
     inherit fullBuildScript;
     inherit lambda_function_zip_script;
+    inherit lambda_function_materialized_script;
     # For debugging:
     inherit stack2nix-script;
     inherit static-stack2nix-builder;
