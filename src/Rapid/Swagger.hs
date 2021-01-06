@@ -316,8 +316,11 @@ addAWSGatewayStanza
 addAWSGatewayStanza terraformVariable v =
   -- Add the POST stanza for any post resources
   v & key "paths" . members . key "post" . _Object %~ (HashMap.insert "x-amazon-apigateway-integration" stanzaPOST)
+    -- Add the GET stanza for any get requests
+    & key "paths" . members . key "get" . _Object %~ (HashMap.insert "x-amazon-apigateway-integration" stanzaGET)
     -- Add the OPTIONS CORS stanza for any options resources
     & key "paths" . members . key "options" . _Object %~ (HashMap.insert "x-amazon-apigateway-integration" corsStanza)
   where
+    stanzaGET = toJSON $ mkGatewayStanza "GET" terraformVariable
     stanzaPOST = toJSON $ mkGatewayStanza "POST" terraformVariable
     corsStanza = toJSON $ defaultCorsStanza
