@@ -73,7 +73,7 @@ let
       src =
         let
           cleanedSrc = cleanSourceWith {
-            src = old.src;
+            src = projectDir;
             filter = fullPath: type:
               let
                 baseName = baseNameOf (toString fullPath);
