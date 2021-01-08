@@ -70,9 +70,10 @@ resource "aws_api_gateway_integration" "servant" {
 }
 
 resource "aws_api_gateway_deployment" "servant" {
-  depends_on  = [aws_api_gateway_integration.servant]
-  rest_api_id = aws_api_gateway_rest_api.servant.id
-  stage_name  = "live"
+  depends_on        = [aws_api_gateway_integration.servant]
+  rest_api_id       = aws_api_gateway_rest_api.servant.id
+  stage_name        = "live"
+  stage_description = md5(file("swagger.json"))
   lifecycle {
     create_before_destroy = true
   }
@@ -80,7 +81,7 @@ resource "aws_api_gateway_deployment" "servant" {
 ### GATEWAY CONFIG ENDS
 
 
-### BIOLERPLATE
+### BOILERPLATE
 # Role
 
 resource "aws_iam_policy" "servant_logging" {
