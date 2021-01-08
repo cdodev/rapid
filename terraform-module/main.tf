@@ -70,7 +70,7 @@ resource "aws_api_gateway_integration" "servant" {
 }
 
 resource "aws_api_gateway_deployment" "servant" {
-  depends_on        = [aws_api_gateway_integration.servant]
+  depends_on        = [aws_api_gateway_integration.servant, aws_api_gateway_rest_api.servant]
   rest_api_id       = aws_api_gateway_rest_api.servant.id
   stage_name        = "live"
   stage_description = md5(file("swagger.json"))
